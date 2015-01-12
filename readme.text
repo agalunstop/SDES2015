@@ -8,3 +8,10 @@ git rm <file> deletes the file. but does not remove previous versions. Does not 
 to get back the file after commit of deletion: git checkout HEAD~1 <file>
 to get the file back before commit : git reset HEAD <file> ------------------------------- ?? Not working
 
+blob: bunch of data, tree: collection of blobs and trees ( directory structure), commit has pointer to the tree, reference to a tree. When commit
+done entire tree is saved to the git. Tag: reference to a particular commit.
+
+Branches--->
+git checkout -b <branch> : creates new branch to the current branch and checks it out.
+
+history of a file: git log <filename>
