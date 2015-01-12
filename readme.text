@@ -6,3 +6,4 @@ git checkout - clobber uncommitted changes in present files, can be used to thro
 ~/.gitconfig - all configs stored here
 git rm <file> deletes the file. but does not remove previous versions. Does not remove the file unless commit is done.
 to get back the file after commit of deletion: git checkout HEAD~1 <file>
+to get the file back before commit : git reset HEAD <file>
