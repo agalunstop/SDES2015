@@ -1,4 +1,3 @@
-abc
 commit: changes are committed to the repository. git log can be used to check status
 commit -a already added files 
 git checkout - clobber uncommitted changes in present files, can be used to throw away current changes
@@ -7,6 +6,7 @@ git checkout - clobber uncommitted changes in present files, can be used to thro
 git rm <file> deletes the file. but does not remove previous versions. Does not remove the file unless commit is done.
 to get back the file after commit of deletion: git checkout HEAD~1 <file>
 to get the file back before commit : git reset HEAD <file> ------------------------------- ?? Not working
+**never do git commit <filename>
 
 blob: bunch of data, tree: collection of blobs and trees ( directory structure), commit has pointer to the tree, reference to a tree. When commit
 done entire tree is saved to the git. Tag: reference to a particular commit.
@@ -15,3 +15,62 @@ Branches--->
 git checkout -b <branch> : creates new branch to the current branch and checks it out.
 
 history of a file: git log <filename>
+When a version is released. Make a branch at that commit and do further bug fixes in the version in that branch.
+?? Can we add branch at a previous version?
+?? How to pull from a previous version? Do we have local copies of all our previous changes/pulls?
+
+git stash list: store your changes somewhere when you do a pull or checkout
+
+Collaborating:
+
+git clone: copy the entire repository locally.
+git pull: pull changes from the repository.
+git push: push local changes to the repository ( commit has to be done before pushing)
+
+in case of two users making changes to the same file it will not allow the second user to push and he will have to pull the 
+repo and clear conflicts.
+
+pulling the repository creates a new version.
+
+Working with remote repos:
+git pull: actually dows download and merge both.
+git fetch: only downloads and not merge it locally but gives user the choice.
+origin is a remote. Remote is a name for another repository (server). Origin is the default name. Remotes can be renamed.
+
+Sharing:
+push and pull a specific branch.
+
+FORK the repo: clones the repo on github and gives you full permissions.
+Pull request: share the fork with the original repo without giving the fork user and write permissions.
+****In shared central project, never push to master. Keep the master synced with the original repo.
+
+prabhu@enthought.com
+
+
+------------------------------------
+paste: concatenate two files vertically, default delimiter is tab, -s 
+cut -d " " -f 2- <filename>
+cut -d " " -f 2- <filename> | paste -d " " <file1> -  : "-" is the substitute for standard input
+cut ... \
+| paste .... : "\" lets you continue the command in next line
+paste and cut do not touch the original file
+
+cut -d " " -c 2- marks1.txt : -c tells to cut character and this will give error as no notion of the delimitor
+1> : redirect stdout
+2> : redirect stderr
+>& : redirect all
+command2 < tempfile : tempfile is read one line at a time and fed to the commandline
+* : wildcard
+? : any character (only one character)
+cat > <filename> : takes input from the terminal untill you press ctrl+c or ctrl+d
+tee: redirect to two places
+grep: global regular expression and print
+grep -n : given the line number
+grep -v : inverts search
+
+tr : translate
+tr -s <char> : suppress mutiple occurences of a character and give only one occurence
+tr -d '\r' : removes carriage return '\r' from the windows generated file
+-c : complement
+
+uniq should be used with sort always
