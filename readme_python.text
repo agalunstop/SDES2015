@@ -1,2 +1,14 @@
 interpreted language --> directly run without compilation
 Pseudo code --> Algorithm (not targeted to any language), python reads like psudo code
+indentation denotes lexical blocking => code looks the same
+
+python interpretor :
+to exit ctrl+D
+
+list: enclosed within []
+tuple --> ()
+del --> deletes declaration of value
+len --> built in functions, can be redefined, del can be used to delete redefinition
+key words cannot be redefined
+triple quotes --> multiline
+<string>[0] = 'h' --> wont change the element zero because strings are immutable
