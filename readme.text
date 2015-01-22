@@ -74,3 +74,10 @@ tr -d '\r' : removes carriage return '\r' from the windows generated file
 -c : complement
 
 uniq should be used with sort always
+
+Control Structures and operators:
+#! : shbang
+script:
+"if test -d <dir_name>" : check if dir is present
+`   ` : stores value in the variable
+xargs: stitches the output of terminal printable command to the input of a command which takes input from stdin
