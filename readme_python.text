@@ -12,3 +12,6 @@ len --> built in functions, can be redefined, del can be used to delete redefini
 key words cannot be redefined
 triple quotes --> multiline
 <string>[0] = 'h' --> wont change the element zero because strings are immutable
+?convert tab to spaces
+for n in range(1, 10, 2) -------- n goes 1 3 5 7 9
+break to break out of a loop
