@@ -1,13 +1,13 @@
 #text based plotter
-def plot(cols=81,rows=31):
+def plot(x,y):
+	cols = max(x)
+	rows = len(y)
     import os
-#   x,y = rounded(x,y)
 
     initial_plot = list_of_spaces(cols,rows)
     x_axis_index,y_axis_index,axes_plot = plot_axes(cols,rows,initial_plot)
-#   print x,y
-    sin_list =  sin_plot_values(rows-1,cols-1)
-#   print sin_list
+			
+    	sin_list =  [0]*cols
     final_plot = axes_plot
     for i in range(len(sin_list)-1):
         row,col = normalized_coordinates(i,sin_list[i],x_axis_index,y_axis_index)
@@ -20,10 +20,6 @@ def normalized_coordinates(x,y,x_axis_index,y_axis_index):
     row = int(x_axis_index-y)
     col = int(y_axis_index+x)
     return row,col
-
-#round and convert to integer
-def rounded(x,y):
-    return int(round(x)),int(round(y))
 
 #plot x and y axes in a given array
 def plot_axes(cols,rows,plot):
