@@ -1,62 +1,60 @@
-#text based plotter
-def plot(x,y):
-	cols = max(x)
-	rows = len(y)
-    import os
+import sys
+import os
 
-    initial_plot = list_of_spaces(cols,rows)
-    x_axis_index,y_axis_index,axes_plot = plot_axes(cols,rows,initial_plot)
-			
-    	sin_list =  [0]*cols
-    final_plot = axes_plot
-    for i in range(len(sin_list)-1):
-        row,col = normalized_coordinates(i,sin_list[i],x_axis_index,y_axis_index)
-        final_plot = change_index_xy_to_star(row,col,final_plot)
+def plot(x,y,size=(80,30),output_file=sys.stdout):
+	#size is (rows,cols)
+	canvas = _plot_canvas(size)
+	for i in range(len(x)):
+		xi,yi=_norm_coord(x[i],y[i],min(x),min(y),max(x),max(y),size)
+		canvas[yi][xi] = '*'
+	_print_canvas(canvas,output_file)
 
-    os.system('clear')
-    print_plot(final_plot)
+def _plot_canvas(size):
+	rows,cols = size
+	return [[' ' for i in range(cols)] for i in range(rows)]
 
-def normalized_coordinates(x,y,x_axis_index,y_axis_index):
-    row = int(x_axis_index-y)
-    col = int(y_axis_index+x)
-    return row,col
+def _paint_on_canvas(canvas,x,y):
+	for i in range(len(x)):
+		canvas[y[i]][x[i]] = '*'
+	return canvas	
 
-#plot x and y axes in a given array
-def plot_axes(cols,rows,plot):
-    x_axis_index = int(rows/2)
-#   y_axis_index = int(cols/2)
-    y_axis_index = 0
-    for i in range(cols):
-        plot[x_axis_index][i] = '-'
-    for i in range(rows):
-        plot[i][y_axis_index] = '|'
-    return x_axis_index,y_axis_index,plot
+def _norm_coord(x,y,xmin,ymin,xmax,ymax,size):
+	rows,cols = size
+	len_x = float(xmax - xmin)
+	len_y = float(ymax - ymin)
+	xi = int(round(((x-xmin)/len_x)*(cols-1)))
+	yi = int(round(((y-ymin)/len_y)*(rows-1)))
+	return xi,yi
 
-#create an array of given spaces of given size
-def list_of_spaces(x,y):
-    return [[' ' for i in range(x)] for i in range(y)]      #2D array of x columns y rows
+def _print_canvas(canvas,output_file):
+	os.system('clear')
+	for line in canvas[::-1]:
+		output_file.write(''.join(line))
+		output_file.write('\n')
 
-#write star at the index given in a twod array
-def change_index_xy_to_star(row,col,twod_list):
-    twod_list[row][col] = '*'
-    return twod_list
+def test_plot_canvas():
+	rows,cols = (40,20)
+	canvas = _plot_canvas((rows,cols))
+	for i in range(rows):
+		for j in range(cols):
+			assert canvas[i][j] == ' '
 
-#print the given array as a plot
-def print_plot(twod_list):
-    import sys
-    for row in twod_list:
-        for col in row:
-            sys.stdout.write(col)                           #printing without spaces or newline
-        print
+def test_paint_on_canvas():
+	rows,cols = (10,5)
+	canvas = _plot_canvas((rows,cols))
+	x = [0,1,2,4]
+	y = [5,6,3,9]
+	painted_canvas = _paint_on_canvas(canvas,x,y)
+	for i in range(len(x)):
+		assert painted_canvas[y[i]][x[i]] == '*'
+	assert painted_canvas[4][0] == ' '
 
-def sin_func(angle,mult_factor):
-    import math
-    return int(round(mult_factor*math.sin(angle)))
-
-def sin_plot_values(rows,cols):
-    import math
-    sin_dict = []
-    for i in range(cols):
-        sin_dict.append(sin_func(2*i*math.pi/(cols-1),rows/2))
-    return sin_dict
-
+def test_norm_coord():
+	rows,cols = (20,40)
+	canvas = _plot_canvas((rows,cols))
+	x = range(1,10)
+	y = 2*x
+	for i in range(len(x)):
+		x[i],y[i]=_norm_coord(x[i],y[i],min(x),min(y),max(x),max(y),(rows,cols))
+	assert x[0] == 0	
+	assert y[0] == 0
